@@ -2,125 +2,143 @@
 
 ## Overview
 
-This project investigates whether wearable-derived physical activity features provide information about cognitive performance in adults aged 60 years and older beyond demographic characteristics.
+This project investigates whether wearable-derived physical activity features can serve as digital biomarkers of cognitive function in older adults.
 
-Using publicly available NHANES 2011–2014 data, the project integrates wrist-worn accelerometer measurements with standardized cognitive assessments to engineer interpretable digital biomarkers and evaluate their associations with cognitive performance.
+Using NHANES 2011–2014 data, wrist-worn accelerometer measurements were integrated with standardized cognitive assessments and demographic data to evaluate both the **statistical association** and **predictive utility** of wearable-derived activity features.
 
-The analysis uses NHANES 2013–2014 for initial model development and NHANES 2011–2012 as an independent replication cohort. Predictive modeling will subsequently evaluate whether wearable-derived features improve out-of-sample prediction of cognitive performance beyond demographic variables alone.
+The analysis included an independent replication across NHANES survey cycles and out-of-sample predictive modeling.
 
 ## Research Question
 
-Do wearable-derived physical activity features provide information about cognitive performance beyond age, sex, and education in adults aged 60 years and older?
+**Can wearable-derived physical activity features provide information about cognitive performance beyond age, sex, and education in adults aged 60–80?**
 
-## Hypothesis
+## Key Findings
 
-Higher wearable-measured physical activity will be associated with better cognitive performance after accounting for age, sex, and education.
+- Higher mean daily wearable-measured activity was significantly associated with better DSST cognitive performance in both independent NHANES cohorts.
+- In NHANES 2013–2014, each additional 1,000 MIMS of mean daily activity was associated with a **0.610-point higher DSST score** after adjustment for age, sex, and education (95% CI: 0.382–0.837).
+- The association replicated in NHANES 2011–2012 (**β = 0.362**, 95% CI: 0.107–0.617).
+- Adding mean daily activity to demographic predictors produced a **small improvement in five-fold cross-validated prediction**, increasing mean R² from **0.3791 to 0.3862**.
+- Cross-cohort validation showed modest and variable predictive improvement across survey cycles.
+- Adding simple measures of day-to-day activity variability provided essentially no additional predictive benefit (R² = 0.3863).
 
-Exploratory analyses will also evaluate whether day-to-day activity variability provides additional information beyond overall activity level.
+Overall, wearable-measured activity demonstrated a reproducible relationship with cognitive performance, but its incremental predictive value beyond basic demographic characteristics was modest.
 
 ## Dataset
 
 **National Health and Nutrition Examination Survey (NHANES), 2011–2014**
 
-Two survey cycles are used:
+Data sources included:
 
-- **2013–2014:** Primary analysis/model-development cohort
-- **2011–2012:** Independent replication cohort
-
-The analysis integrates:
-
-- Cognitive Functioning data
-- Physical Activity Monitor data
+- Wrist-worn physical activity monitor data
+- Cognitive Functioning Questionnaire data
 - Demographic data
 
-Participants are adults aged 60 years and older with available cognitive assessments and sufficient wearable monitoring data.
+NHANES 2013–2014 was used for the primary association analysis, while NHANES 2011–2012 was used as an independent replication cohort.
 
-## Outcomes
+### Primary Cognitive Outcome
 
-### Primary Outcome
+**Digit Symbol Substitution Test (DSST)**
 
-- Digit Symbol Substitution Test (DSST)
+The DSST evaluates cognitive domains including processing speed, sustained attention, and working memory.
 
-### Secondary Outcomes
+## Digital Biomarkers
 
-- Animal Fluency
-- CERAD word learning and delayed recall
-
-Secondary cognitive outcomes will be explored after completion of the primary DSST analysis.
-
-## Candidate Digital Biomarkers
-
-### Primary Features
+Wearable-derived features evaluated in this project included:
 
 - Mean daily activity
-- Day-to-day activity variability
-- Relative activity variability (coefficient of variation)
+- Activity standard deviation
+- Activity coefficient of variation
+- Wearable data-validity measures
 
-### Exploratory Features
+Mean daily activity was the primary wearable-derived biomarker.
 
-- Wake-wear duration
-- Sleep-wear duration
-- Additional rest-activity features
+## Analysis Pipeline
 
-More granular rest-activity and circadian features may be explored in future analyses using higher-resolution accelerometer data.
-
-## Analysis
-
-The project follows the following pipeline:
-
-1. Data acquisition and quality control
-2. Data cleaning and participant selection
+1. NHANES data acquisition and quality control
+2. Participant selection and data cleaning
 3. Wearable feature engineering
 4. Exploratory data analysis
-5. Demographic baseline modeling
-6. Adjusted statistical modeling of wearable biomarkers
-7. Independent replication using NHANES 2011–2012
-8. Predictive modeling and model evaluation
-9. Interpretation of digital biomarkers
+5. Multivariable statistical modeling
+6. Independent cohort replication
+7. Train/test predictive modeling
+8. Five-fold cross-validation
+9. Cross-cohort validation
+10. Exploratory multi-feature modeling
 
-### Primary Statistical Models
+## Results
 
-**Baseline model:**
+### Activity and Cognitive Performance
 
-DSST ~ Age + Sex + Education
+![Activity and DSST](results/figures/figure1_activity_dsst.png)
 
-**Wearable model:**
+**Figure 1.** Relationship between mean daily wearable-measured activity and DSST cognitive performance across the pooled NHANES 2011–2014 sample. The line represents the unadjusted linear trend.
 
-DSST ~ Age + Sex + Education + Mean Daily Activity
+### Independent Replication
 
-Additional wearable features are evaluated to determine whether they provide information beyond mean activity.
+![Replication effects](results/figures/figure2_replication_effects.png)
 
-## Preliminary Findings
+**Figure 2.** Adjusted association between mean daily activity and DSST performance in two independent NHANES cohorts. Error bars represent 95% confidence intervals.
 
-Initial analysis of the NHANES 2013–2014 cohort included 1,386 adults aged 60–80 years with valid DSST, demographic, and wearable data.
+Both cohorts demonstrated a significant positive adjusted association between mean daily activity and DSST performance.
 
-Mean daily wearable-measured activity was positively associated with DSST performance after adjustment for age, sex, and education.
+### Predictive Modeling
 
-Adding mean daily activity to the demographic baseline model increased explained variance from approximately 37.7% to 39.0%.
+![Predictive performance](results/figures/figure3_model_performance.png)
 
-Relative day-to-day activity variability did not provide substantial additional explanatory value beyond mean activity.
+**Figure 3.** Mean out-of-sample R² from five-fold cross-validation.
 
-These findings are preliminary and will be evaluated for reproducibility using the independent NHANES 2011–2012 cohort.
+| Model | Mean CV R² |
+|---|---:|
+| Demographics | 0.3791 |
+| Demographics + Mean Activity | 0.3862 |
+| Demographics + Activity + Variability | 0.3863 |
+
+Mean daily activity provided a small improvement over demographic predictors alone, while additional activity-variability features provided essentially no further improvement.
+
+## Interpretation
+
+The findings highlight an important distinction between **statistical association and predictive utility**.
+
+Mean daily wearable-measured activity showed a reproducible positive association with cognitive performance across two independent cohorts. However, the same biomarker provided only modest incremental information for predicting cognitive performance beyond age, sex, and education.
+
+This suggests that overall physical activity may capture meaningful behavioral information related to cognitive health while remaining insufficient as a standalone digital biomarker for individual-level cognitive prediction.
+
+## Limitations
+
+- NHANES 2011–2014 provides cross-sectional rather than longitudinal cognitive outcomes.
+- Associations cannot establish that greater physical activity causes better cognitive performance.
+- Mean daily activity summarizes overall movement but does not capture the full temporal structure of wearable data.
+- Cognitive performance is influenced by numerous demographic, behavioral, clinical, and social factors not modeled here.
+- The predictive models were intended to evaluate incremental information rather than develop a clinical diagnostic tool.
+- NHANES survey design and sampling weights were not incorporated into the predictive modeling portion of this exploratory project.
+
+## Future Work
+
+Future work could investigate richer wearable-derived biomarkers, including:
+
+- Rest-activity and circadian rhythm features
+- Sleep characteristics
+- Activity timing and fragmentation
+- Gait-derived features
+- Multimodal digital biomarkers
+
+Longitudinal datasets could also be used to investigate whether wearable-derived features predict **future cognitive decline** rather than cross-sectional cognitive performance.
 
 ## Repository Structure
 
 ```text
-cognitivefunction/
-│
-├── README.md
-│
-├── data/
-│
-├── notebooks/
-│   ├── 01_data_exploration.ipynb
-│   ├── 02_replication_2011_2012.ipynb
-│   └── 03_predictive_modeling.ipynb
-│
-├── literature/
-│   └── literature_review.md
-│
-├── results/
-│   ├── figures/
-│   └── tables/
-│
-└── src/
+notebooks/
+    01_data_exploration.ipynb
+    02_replication_2011_2012.ipynb
+    03_predictive_modeling.ipynb
+
+literature/
+    literature_review.md
+
+results/
+    figures/
+        figure1_activity_dsst.png
+        figure2_replication_effects.png
+        figure3_model_performance.png
+    tables/
+        final_results_summary.csv
