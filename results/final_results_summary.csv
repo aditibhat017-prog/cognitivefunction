@@ -1,0 +1,6 @@
+Analysis,Result,Interpretation
+2013–2014 adjusted association,β = 0.610 (95% CI: 0.382–0.837),Significant positive adjusted association
+2011–2012 adjusted association,β = 0.362 (95% CI: 0.107–0.617),Significant positive association in replication cohort
+5-fold CV: Demographics,R² = 0.3791,Baseline predictive performance
+5-fold CV: + Mean Activity,R² = 0.3862,Small predictive improvement
+5-fold CV: + Variability,R² = 0.3863,No meaningful additional improvement
